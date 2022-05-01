@@ -1,0 +1,52 @@
+#User function Template for python3
+from queue import PriorityQueue
+class Solution:
+    
+    #Function to find sum of weights of edges of the Minimum Spanning Tree.
+    def spanningTree(self, V, adj):
+        #code here
+        graph={}
+        visited={}
+        for i in range(V):
+            graph[i]=list()
+            visited[i]=0
+        
+        for i in range(V):
+            for j,k in adj[i]:
+                graph[i].append((k,j))
+                
+        q = PriorityQueue()
+        q.put((0,0))
+        cost=0
+        
+        while(not q.empty()):
+            x=q.get()
+            if(visited[x[1]]==0):
+                visited[x[1]]=1
+                cost+=x[0]
+                for wt,nbr in graph[x[1]]:
+                    if(visited[nbr]==0):
+                        q.put((wt,nbr))
+        return cost
+    
+    
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+import atexit
+import io
+import sys
+
+if __name__ == '__main__':
+    test_cases = int(input())
+    for cases in range(test_cases):
+        V,E = map(int,input().strip().split())
+        adj = [[] for i in range(V)]
+        for i in range(E):
+            u,v,w = map(int,input().strip().split())
+            adj[u].append([v,w])
+            adj[v].append([u,w])
+        ob = Solution()
+        
+        print(ob.spanningTree(V,adj))
+# } Driver Code Ends
