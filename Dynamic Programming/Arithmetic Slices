@@ -1,0 +1,17 @@
+class Solution:
+    def numberOfArithmeticSlices(self, nums: List[int]) -> int:
+        c=0
+        if(len(nums)<3):
+            return(0)
+        diff=nums[1]-nums[0]
+        count=1
+        for i in range(2,len(nums)):
+            d=nums[i]-nums[i-1]
+            if(d==diff):
+                count+=1
+            else:
+                diff=d
+                count=1
+            if(count>=2):
+                c+=count-2+1
+        return(c)
