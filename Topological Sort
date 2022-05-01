@@ -1,0 +1,77 @@
+from collections import deque
+class Solution:
+    
+    #Function to return list containing vertices in Topological order.
+    def topoSort(self, V, adj):
+        # Code here
+        graph={}
+        indegree={}
+        
+        for i in range(V):
+            indegree[i]=0
+            graph[i]=list()
+        for i in range(len(adj)):
+            parent=i
+            for j in adj[i]:
+                child=j
+                indegree[child]+=1
+                graph[parent].append(child)
+                
+        sources=deque()
+        
+        for i,j in indegree.items():
+            if(j==0):
+                sources.append(i)
+        
+        ans=[]
+        while sources:
+            x=sources.popleft()
+            ans.append(x)
+            
+            for nbr in graph[x]:
+                indegree[nbr]-=1
+                if(indegree[nbr]==0):
+                    sources.append(nbr)
+        return ans
+            
+        
+
+#{ 
+#  Driver Code Starts
+# Driver Program
+
+import sys
+sys.setrecursionlimit(10**6)
+        
+def check(graph, N, res):
+    if N!=len(res):
+        return False
+    map=[0]*N
+    for i in range(N):
+        map[res[i]]=i
+    for i in range(N):
+        for v in graph[i]:
+            if map[i] > map[v]:
+                return False
+    return True
+
+if __name__=='__main__':
+    t = int(input())
+    for i in range(t):
+        e,N = list(map(int, input().strip().split()))
+        adj = [[] for i in range(N)]
+        
+        for i in range(e):
+            u,v=map(int,input().split())
+            adj[u].append(v)
+            
+        ob = Solution()
+        
+        res = ob.topoSort(N, adj)
+        
+        if check(adj, N, res):
+            print(1)
+        else:
+            print(0)
+
+# } Driver Code Ends
