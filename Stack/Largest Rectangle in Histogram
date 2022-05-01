@@ -1,0 +1,35 @@
+def nsr(a,n):
+    ans=[]
+    stack=[]
+    for i in range(n-1,-1,-1):
+        while(len(stack)!=0 and a[i]<=a[stack[-1]]):
+            stack.pop()
+        if(len(stack)==0):
+            ans.append(n)
+        else:
+            ans.append(stack[-1])
+        stack.append(i)
+    return ans[::-1]
+
+def psl(a,n):
+    ans=[]
+    stack=[]
+    for i in range(0,n):
+        while(len(stack)!=0 and a[i]<=a[stack[-1]]):
+            stack.pop()
+        if(len(stack)==0):
+            ans.append(-1)
+        else:
+            ans.append(stack[-1])
+        stack.append(i)
+    return ans
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        a=nsr(heights,len(heights))
+        b=psl(heights,len(heights))
+        ansi=0
+        for i in range(len(heights)):
+            ansi=max(ansi,heights[i]*(a[i]-b[i]-1))
+        return ansi
+        
