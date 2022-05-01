@@ -1,0 +1,59 @@
+from queue import PriorityQueue
+class Solution:
+
+    #Function to find the shortest distance of all the vertices
+    #from the source vertex S.
+    def dijkstra(self, V, adj, S):
+        #code here
+        graph={}
+        visited={}
+        for i in range(V):
+            graph[i]=list()
+            visited[i]=0
+        
+        for i in range(V):
+            for j,k in adj[i]:
+                graph[i].append((j,k))
+            
+        q = PriorityQueue()
+        q.put((0,S))
+        
+        ans=[10000000000000]*V
+        ans[S]=0
+        
+        while(not q.empty()):
+            x=q.get()
+            if(visited[x[1]]==1):
+                continue
+            visited[x[1]]=1
+            for nbr,wt in graph[x[1]]:
+                if(ans[nbr]>ans[x[1]]+wt):
+                    ans[nbr]=ans[x[1]]+wt
+                    q.put((ans[nbr],nbr))
+        return ans
+
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+import atexit
+import io
+import sys
+
+
+if __name__ == '__main__':
+    test_cases = int(input())
+    for cases in range(test_cases):
+        V,E = map(int,input().strip().split())
+        adj = [[] for i in range(V)]
+        for i in range(E):
+            u,v,w = map(int,input().strip().split())
+            adj[u].append([v,w])
+            adj[v].append([u,w])
+        S=int(input())
+        ob = Solution()
+        
+        res = ob.dijkstra(V,adj,S)
+        for i in res:
+            print(i,end=" ")
+        print()
+# } Driver Code Ends
