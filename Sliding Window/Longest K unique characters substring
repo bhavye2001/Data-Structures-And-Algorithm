@@ -1,0 +1,45 @@
+#User function Template for python3
+
+class Solution:
+
+    def longestKSubstr(self, s, k):
+        # code here
+        d={}
+        n=len(s)
+        ws=0
+        maxi=0
+        m=0
+        for i in range(n):
+            d[s[i]]=d.get(s[i],0)+1
+            if(len(d)==k):
+                maxi=max(maxi,i-ws+1)
+            
+            elif(len(d)>k):
+                while(len(d)>k):
+                    d[s[ws]]-=1
+                    if(d[s[ws]]==0):
+                        del d[s[ws]]
+                    ws+=1
+        if(maxi==0):
+            return -1
+        return maxi   
+
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+
+if __name__ == '__main__':
+
+    t = int(input())
+
+    for _ in range(t):
+        s = input()
+        k = int(input())
+
+        solObj = Solution()
+
+        ans = solObj.longestKSubstr(s, k)
+
+        print(ans)
+
+# } Driver Code Ends
