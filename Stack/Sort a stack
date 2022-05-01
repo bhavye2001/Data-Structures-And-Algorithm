@@ -1,0 +1,31 @@
+void insert(stack<int> &s,int b)
+{
+  if(s.size()==0 or s.top()<b)
+  {
+    s.push(b);
+  }
+  else{
+    int val=s.top();
+    s.pop();
+    insert(s,b);
+    s.push(val);
+  }
+}
+
+void sorted(stack<int> &s)
+{
+  if(s.size()==0){
+    return;
+  }
+  else{
+    int b=s.top();
+    s.pop();
+    sorted(s);
+    insert(s,b);
+  }
+}
+void SortedStack :: sort()
+{
+   //Your code here
+   sorted(s);
+}
