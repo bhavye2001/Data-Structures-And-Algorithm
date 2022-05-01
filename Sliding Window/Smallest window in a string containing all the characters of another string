@@ -1,0 +1,65 @@
+class Solution:
+    
+    #Function to find the smallest window in the string s consisting
+    #of all the characters of string p.
+    def smallestWindow(self, s, p):
+        #code here
+        hm=dict()
+        for i in p:
+            hm[i]=hm.get(i,0)+1
+        
+        count=len(hm)
+        
+        n=len(s)
+        ws=0
+        we=0
+        ans=int(1e9)
+        output=""
+        while we<n:
+            if(hm.get(s[we],'x')!='x'):
+                hm[s[we]]-=1
+                if(hm[s[we]]==0):
+                    count-=1
+            if count>0:
+                we+=1
+            else:
+                while(count==0 and ws<=we):
+                    if(hm.get(s[ws],'x')!='x'):
+                        hm[s[ws]]+=1
+                        if(hm[s[ws]]==1):
+                            count+=1
+                    ws+=1
+                if(we-ws+2<ans):
+                    output=s[ws-1:we+1]
+                    ans=we-ws+2
+                we+=1
+        if(ans==int(1e9)):
+            return(-1)
+        return(output)
+
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+
+import atexit
+import io
+import sys
+
+_INPUT_LINES = sys.stdin.read().splitlines()
+input = iter(_INPUT_LINES).__next__
+_OUTPUT_BUFFER = io.StringIO()
+sys.stdout = _OUTPUT_BUFFER
+
+@atexit.register
+
+def write():
+    sys.__stdout__.write(_OUTPUT_BUFFER.getvalue())
+
+if __name__=='__main__':
+    t = int(input())
+    for i in range(t):
+        s=str(input())
+        p=str(input())
+        ob = Solution()
+        print(ob.smallestWindow(s,p))
+# } Driver Code Ends
