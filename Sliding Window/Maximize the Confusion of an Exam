@@ -1,0 +1,37 @@
+class Solution(object):
+    def maxConsecutiveAnswers(self, a, k):
+        """
+        :type answerKey: str
+        :type k: int
+        :rtype: int
+        """
+        
+        c1=0
+        ws=0
+        maxlength1=0
+        for i in range(len(a)):
+            if(a[i]=="F"):
+                c1+=1
+            if(c1<=k):
+                maxlength1=max(maxlength1,i-ws+1)
+            while(c1>k):
+                if(a[ws]=="F"):
+                    c1-=1
+                    ws+=1
+                else:
+                    ws+=1
+        c2=0
+        ws=0
+        maxlength2=0
+        for i in range(len(a)):
+            if(a[i]=="T"):
+                c2+=1
+            if(c2<=k):
+                maxlength2=max(maxlength2,i-ws+1)
+            while(c2>k):
+                if(a[ws]=="T"):
+                    c2-=1
+                    ws+=1
+                else:
+                    ws+=1
+        return max(maxlength1,maxlength2)
