@@ -1,0 +1,64 @@
+#Using Topological Sort
+
+#User function Template for python3
+from collections import deque
+
+class Solution:
+    
+    #Function to detect cycle in a directed graph.
+    def isCyclic(self, V, adj):
+        # code here
+        graph={}
+        indegree={}
+        
+        for i in range(V):
+            indegree[i]=0
+            graph[i]=list()
+        
+        for i in range(V):
+            for j in adj[i]:
+                child=j
+                indegree[child]+=1
+                graph[i].append(child)
+        
+        sources=deque()
+        
+        for i,j in indegree.items():
+            if(j==0):
+                sources.append(i)
+                
+        ans=[]
+        while(sources):
+            x=sources.popleft()
+            ans.append(x)
+            for nbr in graph[x]:
+                indegree[nbr]-=1
+                if(indegree[nbr]==0):
+                    sources.append(nbr)
+        if(len(ans)==V):
+            return 0
+        else:
+            return 1
+            
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+
+import sys
+sys.setrecursionlimit(10**6)
+        
+if __name__ == '__main__':
+    t = int(input())
+    for i in range(t):
+        V,E = list(map(int, input().strip().split()))
+        adj = [[] for i in range(V)]
+        for i in range(E):
+            a,b = map(int,input().strip().split())
+            adj[a].append(b)
+        ob = Solution()
+        
+        if ob.isCyclic(V, adj):
+            print(1)
+        else:
+            print(0)
+# } Driver Code Ends
