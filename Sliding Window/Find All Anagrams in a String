@@ -1,0 +1,27 @@
+def solve(s,p):
+    hash_map=dict()
+    for i in p:
+        hash_map[i]=hash_map.get(i,0)+1
+    ws=0
+    a=[]
+    matched=0
+    for we in range(len(s)):
+        curr_char=s[we]
+        if(curr_char in hash_map):
+            hash_map[curr_char]-=1
+            if(hash_map[curr_char]==0):
+                matched+=1
+        if(matched==len(hash_map)):
+            a.append(ws)
+        if(we-ws+1==len(p)):
+            lc=s[ws]
+            ws+=1
+            if(lc in hash_map):
+                if(hash_map[lc]==0):
+                    matched-=1
+                hash_map[lc]+=1
+    return(a)
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        ans=solve(s,p)
+        return(ans)
