@@ -1,0 +1,11 @@
+vector <int> postOrder(Node* root)
+{
+  vector<int>a;
+  if(root==NULL){
+      return a;
+  }
+   postOrder(root->left);
+   postOrder(root->right);
+   cout<<root->data<<" ";
+  return a;
+}
