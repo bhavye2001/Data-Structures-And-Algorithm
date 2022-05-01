@@ -1,0 +1,20 @@
+def print_next_greater_freq(self,arr,n):
+        # code here
+        d={}
+        for i in range(n):
+            d[arr[i]]=d.get(arr[i],0)+1
+        
+        stack=[]
+        ans=[]
+        for i in range(n-1,-1,-1):
+            while(len(stack)!=0 and d[arr[i]]>=d[stack[-1]]):
+                stack.pop()
+            
+            if(len(stack)==0):
+                ans.append(-1)
+            
+            else:
+                ans.append(stack[-1])
+            stack.append(arr[i])
+        
+        return ans[::-1]
