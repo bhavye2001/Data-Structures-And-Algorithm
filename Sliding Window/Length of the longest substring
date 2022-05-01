@@ -1,0 +1,32 @@
+class Solution:
+    def longestUniqueSubsttr(self, s):
+        # code here
+        if(len(s)==0):
+            return 0
+        
+        d=dict()
+        ws=0
+        maxlength=-1
+        
+        for we in range(len(s)):
+            currchar=s[we]
+            d[currchar]=d.get(currchar,0)+1
+            while(d[currchar]>1):
+                d[s[ws]]-=1
+                ws+=1
+            maxlength=max(maxlength,we-ws+1)
+        return maxlength
+
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+
+if __name__=='__main__':
+    t=int(input())
+    for _ in range(t):
+        s = input().strip()
+        
+        
+        ob=Solution()
+        print(ob.longestUniqueSubsttr(s))
+# } Driver Code Ends
