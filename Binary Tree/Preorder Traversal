@@ -1,0 +1,8 @@
+void Preorder(Node*root,vector<int>&v)
+{
+    if(root!=NULL){
+        v.push_back(root->data);
+        Preorder(root->left,v);
+        Preorder(root->right,v);
+    }
+}
