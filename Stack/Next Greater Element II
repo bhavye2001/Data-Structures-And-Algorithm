@@ -1,0 +1,19 @@
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        a=nums+nums
+        n=len(a)-1
+        ans=[]
+        stack=[]
+        for i in range(n,-1,-1):
+            while(len(stack)!=0 and a[i]>=stack[-1]):
+                stack.pop()
+            if(len(stack)==0):
+                ans.append(-1)
+            else:
+                ans.append(stack[-1])
+            stack.append(a[i])
+        ans.reverse()
+        res=[]
+        for i in range(len(nums)):
+            res.append(ans[i])
+        return res
