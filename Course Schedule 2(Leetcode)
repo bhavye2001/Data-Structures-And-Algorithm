@@ -1,0 +1,30 @@
+from collections import deque
+class Solution:
+    def findOrder(self, v: int, a: List[List[int]]) -> List[int]:
+        graph={}
+        indegree={}
+
+        for i in range(v):
+            graph[i]=list()
+            indegree[i]=0
+
+        for edge in a:
+            parent=edge[0]
+            child=edge[1]
+            indegree[parent]+=1
+            graph[child].append(parent)
+        sources=deque()
+        for i,j in indegree.items():
+            if(j==0):
+                sources.append(i)
+        sortedOrder=[]
+        while sources:
+            curr_node=sources.popleft()
+            sortedOrder.append(curr_node)
+            for nbr in graph[curr_node]:
+                indegree[nbr]-=1
+                if(indegree[nbr]==0):
+                    sources.append(nbr)
+        if(len(sortedOrder)==v):
+            return sortedOrder
+        return []
